@@ -50,7 +50,9 @@
                                 
                                     <div class="btn-group">
                                         <a href="{{ route('plans.show', $plan->id) }}" class="btn btn-info">Ver</a>
+                                        
                                     </div>
+                                    <a href="{{ route('plan.profiles', $plan->id) }}" class="btn btn-warning">Perfis</a>
                                   
                             </td>
                         </tr>

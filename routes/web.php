@@ -4,11 +4,43 @@ use App\Http\Controllers\Admin\PlanController;
 
 Route::prefix('admin')
         ->namespace('Admin')
+        ->middleware('auth')
         ->group(function(){
+
+
+    /**
+     * Rotas para perfis no plano
+     */
+
+    Route::get('plan/{id}/profiles', 'ACL\PlanProfilesController@profiles')->name('plan.profiles');
+    Route::get('plan/{id}/profiles/create', 'ACL\PlanProfilesController@profilesAvailable')->name('plan.profiles.available');
+    Route::post('plan/{id}/profiles/store', 'ACL\PlanProfilesController@profilesAttach')->name('plan.profiles.attach');
+    Route::get('plan/{id}/profiles/{idProfile}/detach', 'ACL\PlanProfilesController@profilesDetach')->name('plan.profiles.detach');
+    
+   
+    
+    /* 
+    *Rotas para perfis -> permissões
+    */
+
+    Route::get('profile/{id}/permissions', 'ACL\ProfilePermissionsController@permissions')->name('profile.permissions');
+    Route::get('profile/{id}/permissions/create', 'ACL\ProfilePermissionsController@permissionsAvailable')->name('profile.permissions.available');
+    Route::post('profile/{id}/permissions/store', 'ACL\ProfilePermissionsController@permissionsAttach')->name('profile.permissions.attach');
+
+
+
+
+    /**
+     * Rota para permissões
+     */
+
+    Route::any('permissions/search', 'ACL\PermissionController@search')->name('permissions.search');
+    Route::resource('permissions', 'ACL\PermissionController');
 
     /**
      * Rotas para perfis
      */
+
     Route::any('profiles/search', 'ACL\ProfileController@search')->name('profiles.search');
     Route::resource('profiles', 'ACL\ProfileController');
 
@@ -47,3 +79,10 @@ Route::prefix('admin')
 Route::get('/', function () {
     return view('welcome');
 });
+
+/**
+ * Autenticação
+ */
+Auth::routes();
+
+
