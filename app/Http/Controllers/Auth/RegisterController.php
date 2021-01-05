@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -50,9 +51,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // 'name' => ['required', 'string', 'max:255'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -64,10 +65,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+       $plan = session('plan');
+
+       $tentant = $plan->tenants()->create([
+           'cnpj' => $data['cnpj'],
+           'name' => $data['company'],
+           'url' => Str::kebab($data['company']),
+           'email' => $data['email'],
+           'uuid' => md5(uniqid($data['cnpj'])),
+           'subscription' => now(),
+           'expires_at' => now()->addDays(7),
+
+
+
+       ]);
+
+       $user = $tentant->users()->create([
+             
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+            'password' => bcrypt($data['password']),
+
+       ]);
+
+       return $user;
+
+
     }
 }

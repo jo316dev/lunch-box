@@ -75,10 +75,13 @@ Route::prefix('admin')
   
 
 });
+/**
+ * Rotas do site
+ */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Site\SiteController@index')->name('site.home');
+Route::get('/plan/{url}', 'Site\SiteController@plan')->name('plan.subscription');
+
 
 /**
  * Autenticação
