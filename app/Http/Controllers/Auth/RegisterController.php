@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Services\TenantService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -59,6 +60,7 @@ class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
+     * ele vai enviar os dados para App\Services\TenantServices fazer o cadastro
      *
      * @param  array  $data
      * @return \App\Models\User
@@ -67,29 +69,9 @@ class RegisterController extends Controller
     {
        $plan = session('plan');
 
-       $tentant = $plan->tenants()->create([
-           'cnpj' => $data['cnpj'],
-           'name' => $data['company'],
-           'url' => Str::kebab($data['company']),
-           'email' => $data['email'],
-           'uuid' => md5(uniqid($data['cnpj'])),
-           'subscription' => now(),
-           'expires_at' => now()->addDays(7),
+       $tenantService = app(TenantService::class);
 
-
-
-       ]);
-
-       $user = $tentant->users()->create([
-             
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-
-       ]);
-
-       return $user;
-
+       return $tenantService->make($plan, $data);
 
     }
 }
