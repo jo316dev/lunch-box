@@ -9,6 +9,12 @@ Route::prefix('admin')
 
 
     /**
+     * Uusarios
+     */
+    Route::any('users/search', 'ACL\UserController@search')->name('users.search');
+    Route::resource('users', 'ACL\UserController');
+
+    /**
      * Rotas para perfis no plano
      */
 

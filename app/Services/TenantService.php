@@ -29,9 +29,7 @@ class TenantService
         return  $this->plan->tenants()->create([
             'cnpj' => $this->data['cnpj'],
             'name' => $this->data['company'],
-            'url' => Str::kebab($this->data['company']),
             'email' => $this->data['email'],
-            'uuid' => md5(uniqid($this->data['cnpj'])),
             'subscription' => now(),
             'expires_at' => now()->addDays(7),
         ]);
