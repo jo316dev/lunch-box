@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -36,6 +37,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder 
+     * 
+     */
+    public function scopeTenantUser(Builder $query)
+    {
+        return $query->where('tenant_id', auth()->user()->tenant_id);
+    }
+
+
+
+
+
+
 
     /**
      * Tentna

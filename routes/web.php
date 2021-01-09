@@ -8,6 +8,13 @@ Route::prefix('admin')
         ->group(function(){
 
 
+
+      /**
+     * Categorias
+     */
+    Route::any('categories/search', 'CategoryController@search')->name('categories.search');
+    Route::resource('categories', 'CategoryController');
+
     /**
      * Uusarios
      */

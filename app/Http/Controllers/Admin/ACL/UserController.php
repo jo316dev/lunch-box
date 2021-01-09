@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->repository->paginate();
+        $users = $this->repository->tenantUser()->paginate();
 
         return view('admin.users.index', compact('users'));
     }
@@ -69,7 +69,7 @@ class UserController extends Controller
     public function show($id)
     {
 
-        if(!$user = $this->repository->find($id)){
+        if(!$user = $this->repository->tenantUser()->find($id)){
 
             return redirect()->back()->with('error', 'Perfil não encontrado');
 
