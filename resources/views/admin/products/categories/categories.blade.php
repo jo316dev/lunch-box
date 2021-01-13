@@ -3,7 +3,7 @@
 @section('title', 'Lunch - Perfis')
 
 @section('content_header')
-    <h1>Perfis</h1>
+    <h1>Categorias</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
             @include('admin.includes.alerts')
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="title"> Permissões atribuidas a {{ $profile->name }}</strong> </strong> </h4>
+                    <h4 class="title"> Categorias atribuidas a {{ $product->name }}</strong> </strong> </h4>
                 </div>
                 <div class="col-md-6">
                 
@@ -24,18 +24,20 @@
                 <table class="table table-striped">
                   <thead>
                   <tr>
-                    <th>Permissão</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
                     <th>Ações</th>
                   </tr>
                   </thead>
                   <tbody>
 
-                    @foreach ($permissions as $permission)
+                    @foreach ($product->categories as $category)
                         <tr>
-                            <td>{{ $permission->name }}</td>
+                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->description }}</td>
                             <td>
                                 
-                                <a href="{{ route('profiles.permissions.detach', [$profile->id, $permission->id]) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                <a href="{{ route('products.categories.detach', [$product->id, $category->id]) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -48,7 +50,7 @@
         <div class="card-footer">
           
             <div class="btn-group">
-                <a href="{{ route('profile.permissions.available', $profile->id) }}" class="btn btn-info">Vincular</a>
+                <a href="{{ route('products.categories.available', $product->id) }}" class="btn btn-info">Vincular</a>
             </div>
               
         </div>

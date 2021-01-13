@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Lunch - Usuarios')
+@section('title', 'Lunch - Produtos')
 
 @section('content_header')
-    <h1>Categorias</h1>
+    <h1>Produtos</h1>
 @stop
 
 @section('content')
@@ -12,10 +12,10 @@
             
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="title"> <strong>Categorias Cadastradas</strong> </h4>
+                    <h4 class="title"> <strong>Produtos Cadastrados</strong> </h4>
                 </div>
                 <div class="col-md-6">
-                    <form action="{{ route('categories.search') }}" method="POST" class="form form-inline float-right">
+                    <form action="{{ route('products.search') }}" method="POST" class="form form-inline float-right">
                         @csrf
                         
                         <input type="text" name="filter" class="text form-control" placeholder="Digite um termo">
@@ -33,23 +33,30 @@
                 <table class="table table-striped table-valign-middle">
                   <thead>
                   <tr>
+                    <th>Imagem</th>
                     <th>Nome</th>
                     <th>Descrição</th>
+                    <th>Preço</th>
                     <th>Ações</th>
                   </tr>
                   </thead>
                   <tbody>
 
-                    @foreach ($categories as $category)
+                    @foreach ($products as $product)
                         <tr>
-                            <td>{{ $category->name }}</td>
-                            <td>{{ $category->description }}</td>
+                            <td>
+                                <img src="{{ url("storage/{$product->image}") }}" alt="{{ $product->name }}" style="max-width:150px">
+                            </td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->description }}</td>
+                            <td>{{ number_format($product->price, 2, '.', ',') }}</td>
                             
                             <td>
                                 
                                     <div class="btn-group">
-                                        <a href="{{ route('categories.show', $category->id) }}" class="btn btn-info">Ver</a>
-                                        {{-- <a href="{{ route('products.catgory', $category->id) }}" class="btn btn-warning">Produtos</a> --}}
+                                        <a href="{{ route('products.show', $product->id) }}" class="btn btn-info">Ver</a>
+                                        <a href="{{ route('products.categories', $product->id) }}" class="btn btn-info">Categoria</a>
+
                                         
                                     </div>
                                    
@@ -66,16 +73,16 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-lg-6">
-                    <a href="{{ route('categories.create') }}" class="btn btn-info float-left"><i class="fas fa-plus ">Cadastrar Categorias</i></a>
+                    <a href="{{ route('products.create') }}" class="btn btn-info float-left"><i class="fas fa-plus "></i>Cadastrar Produtoss</a>
                 </div>
                 <div class="col-lg-6 float-right">
 
                     @if (isset($filters))
 
-                        {!! $categories->appends($filters)->links() !!}
+                        {!! $products->appends($filters)->links() !!}
                         
                     @else
-                        {!! $categories->links() !!}
+                        {!! $products->links() !!}
                     @endif
                     
                 </div>

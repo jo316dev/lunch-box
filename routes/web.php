@@ -9,6 +9,16 @@ Route::prefix('admin')
 
 
 
+ 
+  
+
+    /**
+     * Produtos
+     */
+    Route::any('products/search', 'ProductController@search')->name('products.search');
+    Route::resource('products', 'ProductController');
+
+    
       /**
      * Categorias
      */
@@ -39,8 +49,17 @@ Route::prefix('admin')
     Route::get('profile/{id}/permissions', 'ACL\ProfilePermissionsController@permissions')->name('profile.permissions');
     Route::get('profile/{id}/permissions/create', 'ACL\ProfilePermissionsController@permissionsAvailable')->name('profile.permissions.available');
     Route::post('profile/{id}/permissions/store', 'ACL\ProfilePermissionsController@permissionsAttach')->name('profile.permissions.attach');
+    Route::get('profiles/{id}/permissions/{idPermission}/detach', 'ACL\ProfilePermissionsController@detachPermissionsProfile')->name('profiles.permissions.detach');
 
+  
+  /**
+   * Produtos x Categorias
+   */
 
+  Route::get('products/{id}/categories', 'CategoryProductController@categories')->name('products.categories');
+  Route::get('products/{id}/categories/available', 'CategoryProductController@available')->name('products.categories.available');
+  Route::post('products/{id}/categories/store', 'CategoryProductController@categoryAttach')->name('products.categories.attach');
+  Route::get('products/{id}/categories/{idCategories}/detach', 'CategoryProductController@categoryDetach')->name('products.categories.detach');
 
 
     /**

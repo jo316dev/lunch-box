@@ -3,7 +3,7 @@
 @section('title', 'Lunch - Perfis')
 
 @section('content_header')
-    <h1>Perfis</h1>
+    <h1>Categorias</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
             @include('admin.includes.alerts')
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="title"> Permissões atribuidas a {{ $profile->name }}</strong> </strong> </h4>
+                    <h4 class="title"> Categorias disponiveis para: <strong>{{ $product->name }}</strong> </h4>
                 </div>
                 <div class="col-md-6">
                 
@@ -24,21 +24,34 @@
                 <table class="table table-striped">
                   <thead>
                   <tr>
-                    <th>Permissão</th>
+                    <th width="50px">Check</th>
                     <th>Ações</th>
                   </tr>
                   </thead>
                   <tbody>
 
-                    @foreach ($permissions as $permission)
+                   <form action="{{ route('products.categories.attach', $product->id) }}" method="post">
+                       @csrf
+
+                       @foreach ($categories as $category)
+                       <tr>
                         <tr>
-                            <td>{{ $permission->name }}</td>
                             <td>
-                                
-                                <a href="{{ route('profiles.permissions.detach', [$profile->id, $permission->id]) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                <div class="checkbox">
+                                    <label for="">
+                                        <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+                                    </label>
+                                </div>
                             </td>
-                        </tr>
-                    @endforeach
+                        
+                           <td>{{ $category->name }}</td>
+                          
+                       </tr>
+                   @endforeach
+                    <td colspan="500">
+                            <button class="submit btn btn-success">Vincular</button>
+                    </td>
+                   </form>
                   
                   </tbody>
                 </table>
@@ -47,9 +60,7 @@
         </div>
         <div class="card-footer">
           
-            <div class="btn-group">
-                <a href="{{ route('profile.permissions.available', $profile->id) }}" class="btn btn-info">Vincular</a>
-            </div>
+        
               
         </div>
     </div>
