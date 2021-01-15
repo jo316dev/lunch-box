@@ -9,7 +9,23 @@ Route::prefix('admin')
 
 
 
- 
+          Route::get('test-acl', function(){
+            dd(auth()->user()->isAdmin());
+          });
+
+
+    
+    /**
+     * Cargos
+     */
+    Route::resource('roles', 'ACL\RoleController');
+
+     /**
+     * Tenants
+     */
+    // Route::any('products/search', 'ProductController@search')->name('products.search');
+    Route::resource('tenants', 'TenantController');
+
   
 
     /**
