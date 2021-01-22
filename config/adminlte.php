@@ -234,8 +234,8 @@ return [
         [
             'text' => 'Empresas',
             'url'  => 'admin/tenants',
-            'icon' => 'fas fa-building'
-            // 'can' => 'plans'
+            'icon' => 'fas fa-building',
+            'can' => 'tenants'
             
         ],
        

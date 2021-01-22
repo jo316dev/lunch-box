@@ -27,6 +27,7 @@
                   
                    
                     <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning ">Editar</a>
+                    <a href="{{ route('roles.permissions', $role->id) }}" class="btn btn-info ">Permissiões</a>
                 
         
                 <div class="col-10">

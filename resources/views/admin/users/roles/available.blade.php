@@ -3,7 +3,7 @@
 @section('title', 'Lunch - Perfis')
 
 @section('content_header')
-    <h1>Permissoes para Cargos</h1>
+    <h1>Cargos Disponiveis</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
             @include('admin.includes.alerts')
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="title"> Permissões disponiveis para: <strong>{{ $role->name }}</strong> </h4>
+                    <h4 class="title"> Cargos disponiveis para: <strong>{{ $user->name }}</strong> </h4>
                 </div>
                 <div class="col-md-6">
                 
@@ -25,27 +25,28 @@
                   <thead>
                   <tr>
                     <th width="50px">Check</th>
-                    <th>Ações</th>
+                    <th>Cargos</th>
                   </tr>
                   </thead>
                   <tbody>
 
-                   <form action="{{ route('roles.permissions.attach', $role->id) }}" method="post">
+                   <form action="{{ route('users.roles.attach', $user->id) }}" method="post">
                        @csrf
 
-                       @foreach ($permissions as $permission)
+                       @foreach ($roles as $role)
                        <tr>
                         <tr>
                             <td>
                                 <div class="checkbox">
                                     <label for="">
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->id }}">
+                                        <input type="checkbox" name="roles[]" value="{{ $role->id }}">
                                     </label>
                                 </div>
                             </td>
                         
-                           <td>{{ $permission->name }}</td>
-                          
+                           <td>{{ $role->name }}</td>
+
+                           
                        </tr>
                    @endforeach
                     <td colspan="500">

@@ -18,6 +18,8 @@
            <h4>{{ $user->name }}</h4>
            <label for="">Email</label>
            <h4>{{ $user->email }}</h4>
+           <label for="">Cargo</label>
+           <h4>{{ $role ? $role->name : 'Sem cargo'}}</h4>
            
         </div>
         <div class="card-footer">

@@ -50,6 +50,25 @@ class User extends Authenticatable
         return $query->where('tenant_id', auth()->user()->tenant_id);
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function rolesAvailable()
+    {
+        $roles = Role::whereNotIn('id', function($query){
+
+            $query->select('role_user.role_id');
+            $query->from('role_user');
+            $query->whereRaw("role_user.user_id={$this->id}");
+
+        })->get();
+
+
+        return $roles;
+    }
+
 
 
 
@@ -63,5 +82,22 @@ class User extends Authenticatable
      public function tenant()
      {
          return $this->belongsTo(Tenant::class);
+     }
+
+
+     public function roleAvailable()
+     {
+         $roles = Role::whereNotIn('id', function($query){
+
+            $query->select('role_user.role_id');
+            $query->from('role_user');
+            $query->whereRaw("role_user.user_id={$this->id}");
+            
+
+
+
+         })->get();
+
+         return $roles;
      }
 }

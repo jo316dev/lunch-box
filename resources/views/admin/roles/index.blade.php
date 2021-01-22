@@ -48,7 +48,7 @@
                                 
                                     <div class="btn-group">
                                         <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info">Visualizar</a>
-                                        <a href="" class="btn btn-primary"> <i class="fas fa-lock"></i> </a>
+                                        <a href="{{ route('roles.permissions', $role->id) }}" class="btn btn-primary"> <i class="fas fa-lock"></i> </a>
                                     </div>
                                   
                             </td>

@@ -9,9 +9,9 @@ Route::prefix('admin')
 
 
 
-          Route::get('test-acl', function(){
-            dd(auth()->user()->isAdmin());
-          });
+          // Route::get('test-acl', function(){
+          //   dd(auth()->user()->permissions());
+          // });
 
 
     
@@ -32,7 +32,7 @@ Route::prefix('admin')
      * Produtos
      */
     Route::any('products/search', 'ProductController@search')->name('products.search');
-    Route::resource('products', 'ProductController');
+    Route::resource('products', 'ProductController')->middleware('can:products');
 
     
       /**
@@ -57,7 +57,26 @@ Route::prefix('admin')
     Route::get('plan/{id}/profiles/{idProfile}/detach', 'ACL\PlanProfilesController@profilesDetach')->name('plan.profiles.detach');
     
    
-    
+    /* 
+    *Rotas para cargos -> permissões
+    */
+
+    Route::get('roles/{id}/permissions', 'ACL\RolePermissionsController@permissions')->name('roles.permissions');
+    Route::get('roles/{id}/permissions/create', 'ACL\RolePermissionsController@permissionsAvailable')->name('roles.permissions.available');
+    Route::post('roles/{id}/permissions/store', 'ACL\RolePermissionsController@permissionsAttach')->name('roles.permissions.attach');
+    Route::get('roles/{id}/permissions/{idPermission}/detach', 'ACL\RolePermissionsController@permissionsDetach')->name('roles.permissions.detach');
+
+
+     /* 
+    *Rotas para usuários -> cargos
+    */
+
+    Route::get('users/{id}/roles', 'ACL\RoleUserControler@roles')->name('users.roles');
+    Route::get('users/{id}/roles/create', 'ACL\RoleUserControler@rolesAvailable')->name('users.roles.available');
+    Route::post('users/{id}/roles/store', 'ACL\RoleUserControler@rolesAttach')->name('users.roles.attach');
+    Route::get('users/{id}/roles/{idRole}/detach', 'ACL\RoleUserControler@rolesDetach')->name('users.roles.detach');
+
+
     /* 
     *Rotas para perfis -> permissões
     */
@@ -90,7 +109,7 @@ Route::prefix('admin')
      */
 
     Route::any('profiles/search', 'ACL\ProfileController@search')->name('profiles.search');
-    Route::resource('profiles', 'ACL\ProfileController');
+    Route::resource('profiles', 'ACL\ProfileController')->middleware('can:profiles');
 
 
     /**

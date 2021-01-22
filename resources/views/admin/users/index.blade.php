@@ -49,6 +49,7 @@
                                 
                                     <div class="btn-group">
                                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-info">Ver</a>
+                                        <a href="{{ route('users.roles', $user->id) }}" class="btn btn-success">Cargos</a>
                                         
                                     </div>
                                    

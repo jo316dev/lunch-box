@@ -75,9 +75,13 @@ class UserController extends Controller
 
         }
 
+        $role = $user->roles()->get()->first();
+
+       
+
     
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', compact('user', 'role'));
     }
 
     /**
